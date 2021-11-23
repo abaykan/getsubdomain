@@ -54,6 +54,11 @@ func main() {
 
 		sb := string(body)
 
+		if strings.Contains(sb, "No subdomains found.") {
+			fmt.Println(sb)
+			os.Exit(0)
+		}
+
 		pecah := strings.Split(sb, "<br>")
 		pecah = append(pecah, scanner.Text())
 
@@ -65,6 +70,7 @@ func main() {
 			subdo = strings.TrimLeft(subdo, "\r\n")
 			getSc(subdo)
 		}
+		fmt.Printf("\n")
 	}
 }
 
@@ -91,7 +97,7 @@ func getSc(domain string) {
 	}
 	location, err := resp.Location()
 	if err != nil {
-		fmt.Println(err)
+		location = resp.Request.URL
 	}
 
 	if strings.Contains(location.String(), domain) {
