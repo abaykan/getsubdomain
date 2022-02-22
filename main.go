@@ -14,13 +14,11 @@ import (
 
 func main() {
 	banner := `
-    (_(
-    ('')
-  _  "\ )>,_     .-->
-  _>--w/((_ >,_.'
-        ///
-        "'"     akbar.kustirama.id	
-------------------------------------
+----------------------------
+             .
+    ________o=o_______
+    akbar.kustirama.id	
+----------------------------
 	`
 
 	if len(os.Args) < 2 {
@@ -38,7 +36,7 @@ func main() {
 
 	for scanner.Scan() {
 		if len(os.Args) < 2 {
-			fmt.Println("Domain: ", scanner.Text())
+			fmt.Println("▶ Domain: ", scanner.Text())
 		}
 
 		resp, err := http.Get("https://api.c99.nl/subdomainfinder?key=" + strings.TrimRight(string(API_KEY), "\n") + "&domain=" + scanner.Text())
@@ -55,17 +53,18 @@ func main() {
 		sb := string(body)
 
 		if strings.Contains(sb, "No subdomains found.") {
-			fmt.Println(sb)
-			os.Exit(0)
+			fmt.Printf("No subdomains found.\n\n")
+			continue
 		}
 
 		pecah := strings.Split(sb, "<br>")
 		pecah = append(pecah, scanner.Text())
 
 		if len(os.Args) < 2 {
-			fmt.Printf("Subdomain: " + strconv.Itoa(len(pecah)-1) + "\n\n")
+			fmt.Printf("Subdomain(s): " + strconv.Itoa(len(pecah)-1) + "\n\n")
 		}
 
+		fmt.Printf("Checking ...\n")
 		for _, subdo := range removeEmptyStrings(pecah) {
 			subdo = strings.TrimLeft(subdo, "\r\n")
 			getSc(subdo)
@@ -91,17 +90,23 @@ func getSc(domain string) {
 		}}
 
 	resp, err := client.Get("http://" + domain)
-
 	if err != nil {
-		fmt.Println(err)
+		log.Fatalln(err)
 	}
+
 	location, err := resp.Location()
 	if err != nil {
 		location = resp.Request.URL
 	}
 
 	if strings.Contains(location.String(), domain) {
-		fmt.Printf("[%s] %s\n", strconv.Itoa(resp.StatusCode), location)
+		resp2, err := client.Get(location.String())
+		if err != nil {
+			fmt.Println(err)
+			return
+		}
+
+		fmt.Printf("[%s] %s\n", strconv.Itoa(resp2.StatusCode), location.String())
 	} else {
 		fmt.Printf("[%s] %s → %s\n", strconv.Itoa(resp.StatusCode), domain, location)
 	}
