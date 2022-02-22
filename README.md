@@ -11,13 +11,21 @@ Put your `API_KEY` in `~/.config/c99.txt`:
 ```
 
 ### Usage
-Usage example:
+- Single Domain
 ```
 ▶ echo "kustirama.id" | getsubdomain
 ```
 or
 ```
+▶ echo "kustirama.id" | getsubdomain clean
+```
+- From List
+```
 ▶ cat domainlist.txt | getsubdomain
+```
+or
+```
+▶ cat domainlist.txt | getsubdomain clean
 ```
 
 ### Example Output
