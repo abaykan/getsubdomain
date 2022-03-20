@@ -36,4 +36,5 @@ or
 <img src="https://kustirama.id/images/getsubdomain-domain-list.gif">
 
 ### Disclaimer
-For my own learning purpose. These codes are messy af. Feel free to contribute so I know how to code properly.
+For my own learning purpose. These codes are messy af. Feel free to contribute so I know how to code properly.  
+Don't expect anything new or ground breaking, I'm just following tutorials.
