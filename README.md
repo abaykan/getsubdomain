@@ -17,7 +17,7 @@ Put your `API_KEY` in `~/.config/c99.txt`:
 ```
 or
 ```
-▶ echo "kustirama.id" | getsubdomain clean
+▶ echo "kustirama.id" | getsubdomain
 ```
 - From List
 ```
@@ -25,7 +25,7 @@ or
 ```
 or
 ```
-▶ cat domainlist.txt | getsubdomain clean
+▶ cat domainlist.txt | getsubdomain
 ```
 
 ### Example Output
